@@ -2,11 +2,11 @@
 [Over 140 interview questions for Ethereum Developers aggregated by rareskills](https://www.rareskills.io/post/solidity-interview-questions)
 ## Here are my answers:
 ### Easy
-1. What is the difference between private, internal, public, and external functions?
-   => private: can only be called by functions in the same contract
-   => internal: can only be called by functions in the same contract or in contracts that inherit from that contract
-   => public: can be called by anyone 
-   => external: can only be called by functions outside the contract
+1. What is the difference between private, internal, public, and external functions?  
+   => private: can only be called by functions in the same contract  
+   => internal: can only be called by functions in the same contract or in contracts that inherit from that contract  
+   => public: can be called by anyone  
+   => external: can only be called by functions outside the contract  
 3. Approximately, how large can a smart contract be?
    => 24KB
 4. What is the difference between create and create2?

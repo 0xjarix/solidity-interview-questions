@@ -11,8 +11,8 @@
    => 24KB.
 3. What is the difference between create and create2?  
    => The main difference lies in how they calculate the new contract address.  
-   => CREATE uses the sender's address and the nonce. It's possible to predict the address but it becomes less predictable when the nonce changes between the address calculations and the contract creaction
-   => CREATE2 uses the sender's address and a salt value provided by the sender and the contract's init code. It offers more flexibility in choosing the contract's address by adjusting the salt value or the contract bytecode
+   => CREATE uses the sender's address and the nonce. It's possible to predict the address but it becomes less predictable when the nonce changes between the address calculations and the contract creaction.  
+   => CREATE2 uses the sender's address and a salt value provided by the sender and the contract's init code. It offers more flexibility in choosing the contract's address by adjusting the salt value or the contract bytecode.  
    => CREATE2 is the better option for deployments.
 4. What major change with arithmetic happened with Solidity 0.8.0?  
    => reverts with underflow/overflow.

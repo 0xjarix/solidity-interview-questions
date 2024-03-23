@@ -21,7 +21,7 @@
 6. Prior to EIP-1559, how do you calculate the dollar cost of an Ethereum transaction?  
     => Prior to EIP-1559, the dollar cost calculation of an Ethereum transaction was ((GAS USED * GAS PRICE / 10^-9) * CURRENT ETHER PRICE. In this era, the miner received 100% of the gas cost. After EIP-1559, the dollar cost calculation of an Ethereum transaction is (((BASEFEE + PRIORITY FEE) * GAS USED)) / 10^-9) * CURRENT ETHER PRICE. Now, the miner receives a portion of the gas cost (PRIORITY FEE) and the other portion, the protocol fee (BASEFEE), is burned.  
 7. What are the challenges of creating a random number on the blockchain?  
-    => That no one be able to guess the "random" number that can be a pseudo-random number if for example block.timestamp is used for randomness. It is highly advised to used oracles(Chainlink VRF).
+    => Ethereum proceeds deterministically (same output for the same input) and blockchain data is public so hackers can predict that "random" number if it is built using blockchain data such as block.timestamp, block.number or block.difficulty. It is highly advised to use oracles(Chainlink).
 8. What is the difference between a Dutch Auction and an English Auction?  
     => An English auction is when the price goes up throughout the auction, whereas a dutch auction is when it goes down.
 9. What is the difference between transfer and transferFrom in ERC20?  

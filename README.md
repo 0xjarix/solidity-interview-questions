@@ -77,33 +77,33 @@
    => transfer() doesn't have a return value, if the transfer fails, it reverts, whatever the transaction may be, the gas limit is 2300, the receiving smart contract should have a fallback function defined or else the transfer call will throw an error.  
    => send() has a return value, a boolean that can be handled if we don't want to revert, the gas limit is 2300 as well, the receiving smart contract should have a fallback function defined or else the send call will return false.  
    => call() is the recommended way of sending ETH to a smart contract. The empty argument triggers the fallback function of the receiving address. using call, one can also trigger other functions defined in the contract and send a fixed amount of gas to execute the function. The transaction status is sent as a boolean and the return value is sent in the data variable.  
-3. How do you write a gas-efficient for loop in Solidity?
+3. How do you write a gas-efficient for loop in Solidity?  
    => the unchecked box can be used to increment the counter. There's also a more optimal way that involves yul.
-5. What is a storage collision in a proxy contract?
-6. What is the difference between abi.encode and abi.encodePacked?
-   => abi.encode: padded encoding, takes up the whole slot
+5. What is a storage collision in a proxy contract?  
+6. What is the difference between abi.encode and abi.encodePacked?  
+   => abi.encode: padded encoding, takes up the whole slot  
    => abi.encodePacked: unpadded encoding, takes up the required space. Used to concate variables of different types like when we want to create IPFSCID hash concatenated with the correct url
-8. uint8, uint32, uint64, uint128, uint256 are all valid uint sizes. Are there others?
+8. uint8, uint32, uint64, uint128, uint256 are all valid uint sizes. Are there others?  
    => uint160
-10. What changed with block.timestamp before and after proof of stake?
-   => Under proof of work, the Ethereum block interval varied, but miners could modify the block timestamp by +/-15 seconds, as long as the modified value was greater than the parent timestamp, without the block getting rejected.
+10. What changed with block.timestamp before and after proof of stake?  
+   => Under proof of work, the Ethereum block interval varied, but miners could modify the block timestamp by +/-15 seconds, as long as the modified value was greater than the parent timestamp, without the block getting rejected.  
    => Under proof of stake, the Ethereum block interval is fixed at 12 seconds (or possibly a multiple of 12 seconds, in rare cases).
-11. What is frontrunning?
+11. What is frontrunning?  
 12. What is a commit-reveal scheme and when would you use it?
 13. Under what circumstances could abi.encodePacked create a vulnerability?
 14. How does Ethereum determine the BASEFEE in EIP-1559?
 15. What is the difference between a cold read and a warm read? A cold read is when you read a storage variable for the first time, a warm read is when you access it for the 2nd time, cold read costs 1000 gas while warm read costs 100 gas.
-16. How does an AMM price assets?
+16. How does an AMM price assets?  
     => constant product: the product of the reserves is a constant x*y = k
 17. What is a function selector clash in a proxy and how does it happen?
-18. What is the effect on gas of making a function payable?
+18. What is the effect on gas of making a function payable?  
     => cheaper
-20. What is a signature replay attack?
+20. What is a signature replay attack?  
     => using the a valid signature to sign another transaction.
-21. What is gas griefing?
+21. What is gas griefing?  
     => gas griefing is when a user sends enough gas for a call but not its sub-calls.
 23. How would you design a game of rock-paper-scissors in a smart contract such that players cannot cheat?
-24. What is the free memory pointer and where is it stored?
+24. What is the free memory pointer and where is it stored?  
     => it is stored in sequence 0x40-0x60
 26. What function modifiers are valid for interfaces?
 27. What is the difference between memory and calldata in a function argument? calldata is non-modifiable
@@ -114,49 +114,49 @@
 32. What danger do ERC777 tokens pose?
 33. According to the solidity style guide, how should functions be ordered?
 34. According to the solidity style guide, how should function modifiers be ordered?
-35. What is a bonding curve?
+35. What is a bonding curve?  
     => a mathematical concept used to describe the relationship between price and the supply of an asset.
-37. How does safeMint differ from mint in the OpenZeppelin ERC721 implementation?
+37. How does safeMint differ from mint in the OpenZeppelin ERC721 implementation?  
     => safeMint provides check to make sur the contract minting the NFT can actually receive it.
-39. What keywords are provided in Solidity to measure time?
+39. What keywords are provided in Solidity to measure time?  
     => seconds, minutes, hours, days, weeks
 40. What is a sandwich attack?
 41. If a delegatecall is made to a function that reverts, what does the delegatecall do?
-42. What is a gas efficient alternative to multiplying and dividing by a multiple of two?
+42. What is a gas efficient alternative to multiplying and dividing by a multiple of two?  
     => bitwise shifts(left for mul and right for div)
 43. How large a uint can be packed with an address in one slot?  
     => uint96
 44. Which operations give a partial refund of gas?  
     => SELFDESTRUCT (24000 gas)
-45. What is ERC165 used for?
+45. What is ERC165 used for?  
     => The ERC165 standard allows smart contracts to exercise type introspection on other contracts, that is, examining which functions can be called on them. This is usually referred to as a contract's interface.
-47. If a proxy makes a delegatecall to A, and A does address(this).balance, whose balance is returned, the proxy's or A?
+47. If a proxy makes a delegatecall to A, and A does address(this).balance, whose balance is returned, the proxy's or A?  
    => The proxy's
-49. What is a slippage parameter useful for?
+49. What is a slippage parameter useful for?  
     => it is useful to avoid users swap a token let's say for a much higher price than they initially wanted
-50. What does ERC721A do to reduce mint costs? What is the tradeoff?
-    => ERC721A do to reduce mint costs with batch miniting.
+50. What does ERC721A do to reduce mint costs? What is the tradeoff?  
+    => ERC721A do to reduce mint costs with batch miniting.  
     => transferFrom and safeTransferFrom transactions cost more gas.
-51. Why doesn't Solidity support floating point arithmetic?
+51. Why doesn't Solidity support floating point arithmetic?  
     => Loss of Precision
-53. What is TWAP?
+53. What is TWAP?  
     => Time-Weighted Average Price: Average Price of a token most probably over a certain period of time
-54. How does Compound Finance calculate utilization?
-=> All interest rates in Compound are determined as a function of a metric known as the utilization rate. The utilization rate Ua for a money market a is defined1 as:
-Ua = Borrowsa / (Casha + Borrowsa − Reservesa)
-Borrowsa refers to the amount of a borrowed.
-Casha refers to the amount of a left in the system.
-Reservesa refers to the amount of a that Compound keeps as profit.
-Intuitively speaking, this is the percentage of money borrowed out of the total money supplied.
+54. How does Compound Finance calculate utilization?  
+    => All interest rates in Compound are determined as a function of a metric known as the utilization rate. The utilization rate Ua for a money market a is defined1 as:
+Ua = Borrowsa / (Casha + Borrowsa − Reservesa)  
+Borrowsa refers to the amount of a borrowed.  
+Casha refers to the amount of a left in the system.  
+Reservesa refers to the amount of a that Compound keeps as profit.  
+Intuitively speaking, this is the percentage of money borrowed out of the total money supplied.  
 For example: given that reserves are 0, if Alice supplies $500 USDC and Bob supplies $500 USDC, but Charles borrows $100 USDC, the total borrows is $100 and the total cash is 
-500 + 500 − 100 = 900
+500 + 500 − 100 = 900  
 So the utilization rate is 
 100 / (900 + 100) = 10 % 100 / (900 + 100) = 10%.  
 A high ratio signifies that a lot of borrowing is taking place, so interest rates go up to get more people to inject cash into the system. A low ratio signifies that demand for borrowing is low, so interest rates go down to encourage more people to borrow cash from the system. This follows economic theory's idea of price (the "price" of money is its interest rate) relative to supply and demand.
 55. If a delegatecall is made to a function that reads from an immutable variable, what will the value be?
-56. What is a fee-on-transfer token?
+56. What is a fee-on-transfer token?  
     => token that by fundamental design, takes a percentage of internal commission upon transfer or trade
-58. What is a rebasing token?
+58. What is a rebasing token?  
     => Rebase, or elastic, tokens are cryptocurrencies that automatically adjust supply levels to maintain a constant value
 ### Hard
 How does fixed point arithmetic represent numbers?

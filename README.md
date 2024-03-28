@@ -29,7 +29,7 @@
 10. Which is better to use for an address allowlist: a mapping or an array? Why?  
     => A mapping because every address should be corresponded to a bool or enum to know if yes or not, x address is allowed. Mappings are more gas-efficient as we don't have to loop through all the addresses like we would do in an array.
 11. Why shouldn’t tx.origin be used for authentication?  
-    => Because tx.origin is not necessarily the caller of the function, it can be however, but since it's not always the case, it's better to use msg.sender.
+    => Because tx.origin is not necessarily the caller of the function, it can be, however; since it's not always the case, it's better to use msg.sender.
 12. What hash function does Ethereum primarily use?  
     => keccak256.
 13. How much is 1 gwei of Ether?  

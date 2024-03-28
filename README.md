@@ -79,24 +79,24 @@
    => call() is the recommended way of sending ETH to a smart contract. The empty argument triggers the fallback function of the receiving address. using call, one can also trigger other functions defined in the contract and send a fixed amount of gas to execute the function. The transaction status is sent as a boolean and the return value is sent in the data variable.  
 3. How do you write a gas-efficient for loop in Solidity?  
    => the unchecked box can be used to increment the counter. There's also a more optimal way that involves yul.
-5. What is a storage collision in a proxy contract?
+5. What is a storage collision in a proxy contract?  
    => When a delegate call is used, the called contract has access to the calling contract's storage. Therefore, if the layout of the storage variables in the delegate contract doesn't match the layout in the proxy contract, a storage collision occurs.
 7. What is the difference between abi.encode and abi.encodePacked?  
    => abi.encode: padded encoding, takes up the whole slot  
-   => abi.encodePacked: unpadded encoding, takes up the required space. Used to concate variables of different types like when we want to create IPFSCID hash concatenated with the correct url
+   => abi.encodePacked: unpadded encoding, takes up the required space. Used to concate variables of different types like when we want to create IPFS CID hash concatenated with the correct url
 8. uint8, uint32, uint64, uint128, uint256 are all valid uint sizes. Are there others?  
    => uint160
 10. What changed with block.timestamp before and after proof of stake?  
    => Under proof of work, the Ethereum block interval varied, but miners could modify the block timestamp by +/-15 seconds, as long as the modified value was greater than the parent timestamp, without the block getting rejected.  
    => Under proof of stake, the Ethereum block interval is fixed at 12 seconds (or possibly a multiple of 12 seconds, in rare cases).
-11. What is frontrunning?
+11. What is frontrunning?  
     => when a broker or an investor joins a trade because they have foreknowledge of a large confidential deal which will impact the asset's price. In the world of Decentralized Finance, large confidential deal are large pending transactions, in the mempool, that can be frontrunned by MEV-Searchers with their MEV-Bot.
-13. What is a commit-reveal scheme and when would you use it?
+13. What is a commit-reveal scheme and when would you use it?  
     => The Commit-Reveal scheme finds a fun application in-game scenarios such as a digital version of Rock, Paper, and Scissors. Players commit their choices without revealing them, ensuring a fair game. Once both players have committed, the reveal phase follows, determining the winner based on the choices made.
-15. Under what circumstances could abi.encodePacked create a vulnerability?
+15. Under what circumstances could abi.encodePacked create a vulnerability?  
     => encodePacked can result in hash collisions when used with two dynamic arguments (string/bytes)
-17. How does Ethereum determine the BASEFEE in EIP-1559?
-    => 
+17. How does Ethereum determine the BASEFEE in EIP-1559?  
+    => The base fee is calculated by a formula that compares the size of the previous block (the amount of gas used for all the transactions) with the target size. The base fee will increase by a maximum of 12.5% per block if the target block size is exceeded.
 19. What is the difference between a cold read and a warm read?
     => A cold read is when you read a storage variable for the first time, a warm read is when you access it for the 2nd time, cold read costs 1000 gas while warm read costs 100 gas.
 21. How does an AMM price assets?  
@@ -106,29 +106,30 @@
 24. What is the effect on gas of making a function payable?  
     => cheaper
 25. What is a signature replay attack?  
-    => using the a valid signature to sign another transaction.
-26. What is gas griefing?  
+    => using the same signature to sign the same transaction multiple times
+26. What is gas griefing?   
     => gas griefing is when a user sends enough gas for a call but not its sub-calls.
-27. How would you design a game of rock-paper-scissors in a smart contract such that players cannot cheat?
+27. How would you design a game of rock-paper-scissors in a smart contract such that players cannot cheat?  
     => We use the commit-reveal scheme [already explained above].
 29. What is the free memory pointer and where is it stored?  
     => it is stored in sequence 0x40-0x60
-30. What function modifiers are valid for interfaces?
+30. What function modifiers are valid for interfaces?  
     => 
-32. What is the difference between memory and calldata in a function argument?
+32. What is the difference between memory and calldata in a function argument?  
     => calldata is non-modifiable
-33. Describe the three types of storage gas costs.
+33. Describe the three types of storage gas costs.  
     =>  The basic costs associated with storage operations include 20,000 gas for storing a new variable, 5,000 gas for rewriting an existing variable, and a relatively nominal 200 gas for reading from a storage slot
 34. Why shouldn’t upgradeable contracts use the constructor?  
     => Since, they are upgradeable, we will not want to have immutable variables, hence, we don't use constructor, but initialize() instead.
 35. What is the difference between UUPS and the Transparent Upgradeable Proxy pattern?  
     => in UUPS proxies the upgrade is handled by the implementation, and can eventually be removed. Transparent proxies, on the other hand, include the upgrade and admin logic in the proxy itself.
-37. If a contract delegatecalls an empty address or an implementation that was previously self-destructed, what happens? What if it is a regular call instead of a delegatecall?
-38. What danger do ERC777 tokens pose?  
+37. If a contract delegatecalls an empty address or an implementation that was previously self-destructed, what happens? What if it is a regular call instead of a delegatecall?  
+    =>
+39. What danger do ERC777 tokens pose?  
     => reentrancy
-39. According to the solidity style guide, how should functions be ordered?
+40. According to the solidity style guide, how should functions be ordered?  
     => constructor - receive - fallback - external - public - internal - private
-40. According to the solidity style guide, how should function modifiers be ordered?
+41. According to the solidity style guide, how should function modifiers be ordered?  
     => Visibility - Mutability - Virtual - Override - Custom modifiers
 42. What is a bonding curve?  
     => a mathematical concept used to describe the relationship between price and the supply of an asset.

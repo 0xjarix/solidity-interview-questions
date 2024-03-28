@@ -79,8 +79,9 @@
    => call() is the recommended way of sending ETH to a smart contract. The empty argument triggers the fallback function of the receiving address. using call, one can also trigger other functions defined in the contract and send a fixed amount of gas to execute the function. The transaction status is sent as a boolean and the return value is sent in the data variable.  
 3. How do you write a gas-efficient for loop in Solidity?  
    => the unchecked box can be used to increment the counter. There's also a more optimal way that involves yul.
-5. What is a storage collision in a proxy contract?  
-6. What is the difference between abi.encode and abi.encodePacked?  
+5. What is a storage collision in a proxy contract?
+   => When a delegate call is used, the called contract has access to the calling contract's storage. Therefore, if the layout of the storage variables in the delegate contract doesn't match the layout in the proxy contract, a storage collision occurs.
+7. What is the difference between abi.encode and abi.encodePacked?  
    => abi.encode: padded encoding, takes up the whole slot  
    => abi.encodePacked: unpadded encoding, takes up the required space. Used to concate variables of different types like when we want to create IPFSCID hash concatenated with the correct url
 8. uint8, uint32, uint64, uint128, uint256 are all valid uint sizes. Are there others?  
@@ -88,60 +89,77 @@
 10. What changed with block.timestamp before and after proof of stake?  
    => Under proof of work, the Ethereum block interval varied, but miners could modify the block timestamp by +/-15 seconds, as long as the modified value was greater than the parent timestamp, without the block getting rejected.  
    => Under proof of stake, the Ethereum block interval is fixed at 12 seconds (or possibly a multiple of 12 seconds, in rare cases).
-11. What is frontrunning?  
-12. What is a commit-reveal scheme and when would you use it?
-13. Under what circumstances could abi.encodePacked create a vulnerability?
-14. How does Ethereum determine the BASEFEE in EIP-1559?
-15. What is the difference between a cold read and a warm read? A cold read is when you read a storage variable for the first time, a warm read is when you access it for the 2nd time, cold read costs 1000 gas while warm read costs 100 gas.
-16. How does an AMM price assets?  
+11. What is frontrunning?
+    => when a broker or an investor joins a trade because they have foreknowledge of a large confidential deal which will impact the asset's price. In the world of Decentralized Finance, large confidential deal are large pending transactions, in the mempool, that can be frontrunned by MEV-Searchers with their MEV-Bot.
+13. What is a commit-reveal scheme and when would you use it?
+    => The Commit-Reveal scheme finds a fun application in-game scenarios such as a digital version of Rock, Paper, and Scissors. Players commit their choices without revealing them, ensuring a fair game. Once both players have committed, the reveal phase follows, determining the winner based on the choices made.
+15. Under what circumstances could abi.encodePacked create a vulnerability?
+    => encodePacked can result in hash collisions when used with two dynamic arguments (string/bytes)
+17. How does Ethereum determine the BASEFEE in EIP-1559?
+    => 
+19. What is the difference between a cold read and a warm read?
+    => A cold read is when you read a storage variable for the first time, a warm read is when you access it for the 2nd time, cold read costs 1000 gas while warm read costs 100 gas.
+21. How does an AMM price assets?  
     => constant product: the product of the reserves is a constant x*y = k
-17. What is a function selector clash in a proxy and how does it happen?
-18. What is the effect on gas of making a function payable?  
+22. What is a function selector clash in a proxy and how does it happen?  
+    =>  In the case of a proxy, and plus particularly of a transparent proxy, a same function with the same arguments can be defined in the proxy and its implementation resulting in a function clash.
+24. What is the effect on gas of making a function payable?  
     => cheaper
-20. What is a signature replay attack?  
+25. What is a signature replay attack?  
     => using the a valid signature to sign another transaction.
-21. What is gas griefing?  
+26. What is gas griefing?  
     => gas griefing is when a user sends enough gas for a call but not its sub-calls.
-23. How would you design a game of rock-paper-scissors in a smart contract such that players cannot cheat?
-24. What is the free memory pointer and where is it stored?  
+27. How would you design a game of rock-paper-scissors in a smart contract such that players cannot cheat?
+    => We use the commit-reveal scheme [already explained above].
+29. What is the free memory pointer and where is it stored?  
     => it is stored in sequence 0x40-0x60
-26. What function modifiers are valid for interfaces?
-27. What is the difference between memory and calldata in a function argument? calldata is non-modifiable
-28. Describe the three types of storage gas costs. 
-29. Why shouldn’t upgradeable contracts use the constructor?
-30. What is the difference between UUPS and the Transparent Upgradeable Proxy pattern?
-31. If a contract delegatecalls an empty address or an implementation that was previously self-destructed, what happens? What if it is a regular call instead of a delegatecall?
-32. What danger do ERC777 tokens pose?
-33. According to the solidity style guide, how should functions be ordered?
-34. According to the solidity style guide, how should function modifiers be ordered?
-35. What is a bonding curve?  
+30. What function modifiers are valid for interfaces?
+    => 
+32. What is the difference between memory and calldata in a function argument?
+    => calldata is non-modifiable
+33. Describe the three types of storage gas costs.
+    =>  The basic costs associated with storage operations include 20,000 gas for storing a new variable, 5,000 gas for rewriting an existing variable, and a relatively nominal 200 gas for reading from a storage slot
+34. Why shouldn’t upgradeable contracts use the constructor?  
+    => Since, they are upgradeable, we will not want to have immutable variables, hence, we don't use constructor, but initialize() instead.
+35. What is the difference between UUPS and the Transparent Upgradeable Proxy pattern?  
+    => in UUPS proxies the upgrade is handled by the implementation, and can eventually be removed. Transparent proxies, on the other hand, include the upgrade and admin logic in the proxy itself.
+37. If a contract delegatecalls an empty address or an implementation that was previously self-destructed, what happens? What if it is a regular call instead of a delegatecall?
+38. What danger do ERC777 tokens pose?  
+    => reentrancy
+39. According to the solidity style guide, how should functions be ordered?
+    => constructor - receive - fallback - external - public - internal - private
+40. According to the solidity style guide, how should function modifiers be ordered?
+    => Visibility - Mutability - Virtual - Override - Custom modifiers
+42. What is a bonding curve?  
     => a mathematical concept used to describe the relationship between price and the supply of an asset.
-37. How does safeMint differ from mint in the OpenZeppelin ERC721 implementation?  
+43. How does safeMint differ from mint in the OpenZeppelin ERC721 implementation?  
     => safeMint provides check to make sur the contract minting the NFT can actually receive it.
-39. What keywords are provided in Solidity to measure time?  
+44. What keywords are provided in Solidity to measure time?  
     => seconds, minutes, hours, days, weeks
-40. What is a sandwich attack?
-41. If a delegatecall is made to a function that reverts, what does the delegatecall do?
-42. What is a gas efficient alternative to multiplying and dividing by a multiple of two?  
+45. What is a sandwich attack?  
+    => When users with access to the mempool sees a profitable trade, they then pay extra gas to process their purchase of the token sooner to drive the price and the demand of the token up, after that the original tx happens(the sandwiched tx), this increases the price even more. Then the attacker sells the token at an inflationed rate, thus devaluing the token tx value and pocketting the difference.
+46. If a delegatecall is made to a function that reverts, what does the delegatecall do?
+    => 
+47. What is a gas efficient alternative to multiplying and dividing by a multiple of two?  
     => bitwise shifts(left for mul and right for div)
-43. How large a uint can be packed with an address in one slot?  
+48. How large a uint can be packed with an address in one slot?  
     => uint96
-44. Which operations give a partial refund of gas?  
+49. Which operations give a partial refund of gas?  
     => SELFDESTRUCT (24000 gas)
-45. What is ERC165 used for?  
+50. What is ERC165 used for?  
     => The ERC165 standard allows smart contracts to exercise type introspection on other contracts, that is, examining which functions can be called on them. This is usually referred to as a contract's interface.
-47. If a proxy makes a delegatecall to A, and A does address(this).balance, whose balance is returned, the proxy's or A?  
+51. If a proxy makes a delegatecall to A, and A does address(this).balance, whose balance is returned, the proxy's or A?  
    => The proxy's
-49. What is a slippage parameter useful for?  
+52. What is a slippage parameter useful for?  
     => it is useful to avoid users swap a token let's say for a much higher price than they initially wanted
-50. What does ERC721A do to reduce mint costs? What is the tradeoff?  
+53. What does ERC721A do to reduce mint costs? What is the tradeoff?  
     => ERC721A do to reduce mint costs with batch miniting.  
     => transferFrom and safeTransferFrom transactions cost more gas.
-51. Why doesn't Solidity support floating point arithmetic?  
+54. Why doesn't Solidity support floating point arithmetic?  
     => Loss of Precision
-53. What is TWAP?  
+55. What is TWAP?  
     => Time-Weighted Average Price: Average Price of a token most probably over a certain period of time
-54. How does Compound Finance calculate utilization?  
+56. How does Compound Finance calculate utilization?  
     => All interest rates in Compound are determined as a function of a metric known as the utilization rate. The utilization rate Ua for a money market a is defined1 as:
 Ua = Borrowsa / (Casha + Borrowsa − Reservesa)  
 Borrowsa refers to the amount of a borrowed.  
@@ -153,10 +171,11 @@ For example: given that reserves are 0, if Alice supplies $500 USDC and Bob supp
 So the utilization rate is 
 100 / (900 + 100) = 10 % 100 / (900 + 100) = 10%.  
 A high ratio signifies that a lot of borrowing is taking place, so interest rates go up to get more people to inject cash into the system. A low ratio signifies that demand for borrowing is low, so interest rates go down to encourage more people to borrow cash from the system. This follows economic theory's idea of price (the "price" of money is its interest rate) relative to supply and demand.
-55. If a delegatecall is made to a function that reads from an immutable variable, what will the value be?
-56. What is a fee-on-transfer token?  
+57. If a delegatecall is made to a function that reads from an immutable variable, what will the value be?
+    => 
+58. What is a fee-on-transfer token?  
     => token that by fundamental design, takes a percentage of internal commission upon transfer or trade
-58. What is a rebasing token?  
+59. What is a rebasing token?  
     => Rebase, or elastic, tokens are cryptocurrencies that automatically adjust supply levels to maintain a constant value
 ### Hard
 How does fixed point arithmetic represent numbers?

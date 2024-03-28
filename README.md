@@ -71,7 +71,9 @@
 30. What is the largest value a uint256 can store?  
     => 2^256 - 1
 31. What is variable and fixed interest rate?  
-    => when taking a loan that you have to repay with interest, there are 2 kinds of interests fixed rate: that stays the same and is known when you take the loan and variable rate that can vary since the loan was taken.
+    => when taking a loan that you have to repay with interest, there are 2 kinds of interests:  
+       - fixed rate that stays the same and is known when you take the loan  
+       - variable rate that can vary since the loan was taken.
 ### Medium
 1. What is the difference between transfer and send? Why should they not be used?  
    => transfer() doesn't have a return value, if the transfer fails, it reverts, whatever the transaction may be, the gas limit is 2300, the receiving smart contract should have a fallback function defined or else the transfer call will throw an error.  

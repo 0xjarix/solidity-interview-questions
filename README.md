@@ -106,7 +106,7 @@
 22. What is a function selector clash in a proxy and how does it happen?  
     =>  In the case of a proxy, and plus particularly of a transparent proxy, a same function with the same arguments can be defined in the proxy and its implementation resulting in a function clash.
 24. What is the effect on gas of making a function payable?  
-    => cheaper
+    => cheaper as there is no checks for the ether sent `require(msg.value == 0)`
 25. What is a signature replay attack?  
     => using the same signature to sign the same transaction multiple times
 26. What is gas griefing?   

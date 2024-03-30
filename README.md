@@ -87,7 +87,7 @@
    => abi.encode: padded encoding, takes up the whole slot  
    => abi.encodePacked: unpadded encoding, takes up the required space. Used to concate variables of different types like when we want to create IPFS CID hash concatenated with the correct url
 8. uint8, uint32, uint64, uint128, uint256 are all valid uint sizes. Are there others?  
-   => uint160
+   => Yes, alluint8 to uint256 in steps of 8 (unsigned of 8 up to 256 bits). For example, there is also uint16, uint24, uint40, uint160(for addresses)
 10. What changed with block.timestamp before and after proof of stake?  
    => Under proof of work, the Ethereum block interval varied, but miners could modify the block timestamp by +/-15 seconds, as long as the modified value was greater than the parent timestamp, without the block getting rejected.  
    => Under proof of stake, the Ethereum block interval is fixed at 12 seconds (or possibly a multiple of 12 seconds, in rare cases).
@@ -116,7 +116,7 @@
 29. What is the free memory pointer and where is it stored?  
     => it is stored in sequence 0x40-0x60
 30. What function modifiers are valid for interfaces?  
-    => 
+    => pure, view, external, override, payable
 32. What is the difference between memory and calldata in a function argument?  
     => calldata is non-modifiable
 33. Describe the three types of storage gas costs.  
@@ -126,7 +126,7 @@
 35. What is the difference between UUPS and the Transparent Upgradeable Proxy pattern?  
     => in UUPS proxies the upgrade is handled by the implementation, and can eventually be removed. Transparent proxies, on the other hand, include the upgrade and admin logic in the proxy itself.
 37. If a contract delegatecalls an empty address or an implementation that was previously self-destructed, what happens? What if it is a regular call instead of a delegatecall?  
-    =>
+    => If a contract delegatecalls to a self-destructed implementation, the delegatecall will return a success. Same thing for `call`, it will return true too.
 39. What danger do ERC777 tokens pose?  
     => reentrancy
 40. According to the solidity style guide, how should functions be ordered?  
@@ -142,7 +142,7 @@
 45. What is a sandwich attack?  
     => When users with access to the mempool sees a profitable trade, they then pay extra gas to process their purchase of the token sooner to drive the price and the demand of the token up, after that the original tx happens(the sandwiched tx), this increases the price even more. Then the attacker sells the token at an inflationed rate, thus devaluing the token tx value and pocketting the difference.
 46. If a delegatecall is made to a function that reverts, what does the delegatecall do?
-    => 
+    => Delegatecall will return false, it does not revert.
 47. What is a gas efficient alternative to multiplying and dividing by a multiple of two?  
     => bitwise shifts(left for mul and right for div)
 48. How large a uint can be packed with an address in one slot?  
@@ -174,8 +174,8 @@ For example: given that reserves are 0, if Alice supplies $500 USDC and Bob supp
 So the utilization rate is 
 100 / (900 + 100) = 10 % 100 / (900 + 100) = 10%.  
 A high ratio signifies that a lot of borrowing is taking place, so interest rates go up to get more people to inject cash into the system. A low ratio signifies that demand for borrowing is low, so interest rates go down to encourage more people to borrow cash from the system. This follows economic theory's idea of price (the "price" of money is its interest rate) relative to supply and demand.
-57. If a delegatecall is made to a function that reads from an immutable variable, what will the value be?
-    => 
+57. If a delegatecall is made to a function that reads from an immutable variable, what will the value be?  
+    => An immutable variable is stored in the bytecode of the implementation contract and it is this value which will be read. With a proxy, you can change/upgrade the value of an immutable variable by upgrading to a new implementation.
 58. What is a fee-on-transfer token?  
     => token that by fundamental design, takes a percentage of internal commission upon transfer or trade
 59. What is a rebasing token?  
@@ -272,7 +272,8 @@ When a contract calls another call via call, delegatecall, or staticcall, how is
 What is the difference between bytes and bytes1[] in memory?
 
 ### Advanced
-What addresses to the ethereum precompiles live at?
+1. What addresses to the ethereum precompiles live at?  
+   => The nine precompiles live in addresses 0x01 to 0x09
 
 How does Solidity manage the function selectors when there are more than 4 functions?
 
@@ -282,7 +283,8 @@ How does ABI encoding vary between calldata and memory, if at all?
 
 What is the difference between how a uint64 and uint256 are abi-encoded in calldata?
 
-What is read-only reentrancy?
+What is read-only reentrancy?  
+=> A read-only reentrancy is a reentrancy caused by reading an outdated storage variable
 
 What are the security considerations of reading a (memory) bytes array from an untrusted smart contract call?
 
@@ -290,7 +292,8 @@ If you deploy an empty Solidity contract, what bytecode will be present on the b
 
 How does the EVM price memory usage?
 
-What is stored in the metadata section of a smart contract?
+What is stored in the metadata section of a smart contract?  
+=> ipfs of the solidity compiler produced JSON
 
 What is the uncle-block attack from an MEV perspective?
 

@@ -181,21 +181,27 @@ A high ratio signifies that a lot of borrowing is taking place, so interest rate
 59. What is a rebasing token?  
     => Rebase, or elastic, tokens are cryptocurrencies that automatically adjust supply levels to maintain a constant value
 ### Hard
-How does fixed point arithmetic represent numbers?
+1. How does fixed point arithmetic represent numbers?
 
-What is an ERC20 approval frontrunning attack?
+2. What is an ERC20 approval frontrunning attack?  
+=> A malicious actor monitors the mempool for new approve transactions, before they are processed. Once they see an approve transaction, they quickly submit a "transferFrom" transaction to move the approved tokens to their own wallet, before the original approve transaction is processed. When the approve transaction is finally mined, it approves the exchange's transfer. But the tokens have already been stolen by the frontrunner via transferFrom. The exchange's subsequent transfer then fails, as the allowance has been emptied by the malicious frontrunner.
 
 What opcode accomplishes address(this).balance?
+=> SELFBALANCE
 
-How many arguments can a solidity event have?
+How many arguments can a solidity event have?  
+=> A log can have up to 4 topics, but a non-anonymous solidity event can have up to 3 indexed arguments
 
-What is an anonymous Solidity event?
+What is an anonymous Solidity event?  
+=> 
 
 Under what circumstances can a function receive a mapping as an argument?
 
-What is an inflation attack in ERC4626
+What is an inflation attack in ERC4626?  
+=> ERC4626 vaults hold deposited assets and issue vault shares representing claims on those assets. When assets are deposited, the vault mints new shares proportional to the deposit amount. Conversely, when shares are burned, the corresponding assets are withdrawn. The inflation attack exploits a lack of validation on deposit amounts. A malicious actor deposits a very large amount of an asset, much more than they actually provide. This mints a huge number of new shares, inflating the total supply. They then immediately redeem a small subset of the shares, withdrawing real assets while leaving inflated shares outstanding. This effectively steals value from existing share holders by diluting the claims on underlying assets.
 
-How many arguments can a solidity function have?
+How many arguments can a solidity function have?  
+=> 16
 
 How many storage slots does this use? uint64[] x = [1,2,3,4,5]? Does it differ from memory?
 
@@ -314,15 +320,19 @@ When selfdestruct is called, at what point is the Ether transferred? At what poi
 
 Under what conditions does the Openzeppelin Proxy.sol overwrite the free memory pointer? Why is it safe to do this?
 
-Why did Solidity deprecate the "years" keyword?
+Why did Solidity deprecate the "years" keyword?  
+=> it has been deprecated because not every year is composed by 365 days (leap years)
 
-What does the verbatim keyword do, and where can it be used?
+What does the verbatim keyword do, and where can it be used?  
+=> In short, it will allow us to add our own bytecode to an already compiled contract. It can be used in YUL for optimization purposes
 
 How much gas can be forwarded in a call to another smart contract?
 
-What does an int256 variable that stores -1 look like in hex?
+What does an int256 variable that stores -1 look like in hex?  
+=> 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 
-What is the use of the signextend opcode?
+What is the use of the signextend opcode?  
+=> SIGNEXTEND does appear rarely. Because SIGNEXTEND is used for complement code, and the complement code is to use addition instead of subtraction. For example, for 4 bit numbers, y = x + a mod 16 , subtracting 1 is equal to adding 15, which is why the complement code of -1 is equal to 1111 , standing for 15.
 
 Why do negative numbers in calldata cost more gas?
 

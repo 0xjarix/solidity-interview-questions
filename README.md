@@ -342,3 +342,7 @@ Why do negative numbers in calldata cost more gas?
 What is a zk-friendly hash function and how does it differ from a non-zk-friendly hash function?
 
 What is a nullifier in the context of zero knowledge, and what is it used for?
+
+## Bonus(Interview questions I came up with):
+What's the difference between a contract and an abstract contract?
+=> An abstract contract has at least one of its functions not implemented
